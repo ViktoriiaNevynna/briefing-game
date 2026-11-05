@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Брифінг о 08:00. Справа «Потрійний контракт»</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E6EAEF; --surface:#FFFFFF; --surface-2:#F2F4F7; --ink:#16202C; --muted:#566273; --line:#C9D1DB;
+  --accent:#1E4E8C; --accent-ink:#FFFFFF; --accent-soft:#E3ECF8;
+  --lamp:#8A5A00; --lamp-bg:#FFF2D2;
+  --flag:#A8261D; --flag-bg:#FBE7E4;
+  --ok:#1C6E52; --ok-bg:#DFF1E9;
+  --hdr-bg:#14213A; --hdr-ink:#EEF2F8; --hdr-muted:#9FB0C8; --hdr-track:#2A3A57;
+  --night:#3B5689; --dawn:#F2A83B;
+  --paper:#FBFAF6; --paper-ink:#2A2A26; --paper-line:#D9D5C8;
+  --overlay:rgba(12,18,28,.55);
+  --sans:"IBM Plex Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E141D; --surface:#162030; --surface-2:#1C283A; --ink:#E3E9F1; --muted:#97A5B7; --line:#2B3A4F;
+    --accent:#7FB0F0; --accent-ink:#0E141D; --accent-soft:#1C3150;
+    --lamp:#F2BE5C; --lamp-bg:#3A2D12;
+    --flag:#FF9187; --flag-bg:#3A1C1A;
+    --ok:#73D2AE; --ok-bg:#15342A;
+    --hdr-bg:#0A1220; --hdr-ink:#E9EEF6; --hdr-muted:#8798B2; --hdr-track:#22324D;
+    --paper:#20262F; --paper-ink:#E7E3D8; --paper-line:#3A4150;
+    --overlay:rgba(0,0,0,.65);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E141D; --surface:#162030; --surface-2:#1C283A; --ink:#E3E9F1; --muted:#97A5B7; --line:#2B3A4F;
+  --accent:#7FB0F0; --accent-ink:#0E141D; --accent-soft:#1C3150;
+  --lamp:#F2BE5C; --lamp-bg:#3A2D12;
+  --flag:#FF9187; --flag-bg:#3A1C1A;
+  --ok:#73D2AE; --ok-bg:#15342A;
+  --hdr-bg:#0A1220; --hdr-ink:#E9EEF6; --hdr-muted:#8798B2; --hdr-track:#22324D;
+  --paper:#20262F; --paper-ink:#E7E3D8; --paper-line:#3A4150;
+  --overlay:rgba(0,0,0,.65);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--hdr-bg)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3{margin:0;line-height:1.2}
+p{margin:0}
+
+/* Шапка: годинник і шкала ночі */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--hdr-bg);color:var(--hdr-ink)}
+.bar-in{max-width:1440px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.case{min-width:200px}
+.case-k{font-size:13px;color:var(--hdr-muted)}
+.case-t{font-weight:600;font-size:16px}
+.time{flex:1;display:flex;align-items:center;gap:18px;min-width:280px}
+.clock{font-family:var(--mono);font-size:30px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--dawn)}
+.tl{flex:1;min-width:160px}
+.track{height:8px;border-radius:4px;background:var(--hdr-track);overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--night),var(--dawn));transition:width .6s ease}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--hdr-muted);margin-top:4px}
+.left{font-size:13px;color:var(--hdr-muted);white-space:nowrap;min-width:150px;text-align:right}
+@media (max-width:640px){
+  .bar-in{flex-direction:column;align-items:stretch;gap:6px;padding:10px 16px}
+  .tl{min-width:0}
+  .case-t{font-size:15px}
+  .time{flex-wrap:wrap;gap:4px 14px;min-width:0;width:100%}
+  .clock{font-size:24px}
+  .ticks span:not(:first-child):not(:last-child){display:none}
+  .left{min-width:0;text-align:left;width:100%}
+}
+
+/* Загальні елементи */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.panel h2{font-size:15px;font-weight:600;margin-bottom:10px}
+.sub{font-size:13px;color:var(--muted);margin:-6px 0 12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer;font-weight:500;width:100%}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.inline{width:auto}
+.link{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Вступ */
+.intro{max-width:720px;margin:0 auto;padding:40px 20px 60px}
+.intro h1{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.intro .lead{color:var(--muted);margin-bottom:28px}
+.chat{display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+.msg{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start}
+.ava{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:14px;background:var(--accent-soft);color:var(--accent)}
+.ava.b{background:var(--lamp-bg);color:var(--lamp)}
+.bubble{background:var(--surface);border:1px solid var(--line);border-radius:4px 12px 12px 12px;padding:12px 14px}
+.who{font-size:13px;color:var(--muted);margin-bottom:4px}
+.who b{color:var(--ink);font-weight:600}
+.rules{background:var(--surface-2);border-radius:10px;padding:16px;margin-bottom:24px}
+.rules p+p{margin-top:8px}
+.synthetic{font-size:13px;color:var(--muted);margin-top:14px}
+
+/* Робочий екран */
+.work{max-width:1440px;margin:0 auto;padding:20px;display:grid;grid-template-columns:270px minmax(0,1fr) 320px;gap:18px;align-items:start}
+.col-l,.col-r,.col-c{display:flex;flex-direction:column;gap:18px;min-width:0}
+@media (max-width:1150px){.work{grid-template-columns:1fr}.col-c{order:-1}}
+@media (max-width:1150px){.col-l{order:-2}}
+
+.metric{padding:10px 0;border-top:1px solid var(--line)}
+.metric:first-of-type{border-top:0;padding-top:0}
+.m-l{font-size:13px;color:var(--muted)}
+.m-v{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.metric.is-flag .m-v{color:var(--flag)}
+.budget{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px;margin-top:4px}
+.note{font-size:13px;background:var(--surface-2);border-radius:6px;padding:8px 10px;margin-top:10px}
+.act{display:flex;flex-direction:column;gap:8px}
+.hint-s{font-size:12px;color:var(--muted);margin:-2px 0 6px}
+
+.tools{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.tool{width:100%;text-align:left;display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.tool:hover:not(:disabled){border-color:var(--accent);background:var(--surface-2)}
+.tool:disabled{opacity:.45;cursor:not-allowed}
+.t-n{font-weight:500}
+.t-c{grid-row:1/3;grid-column:2;align-self:center;font-family:var(--mono);font-size:12px;color:var(--lamp);background:var(--lamp-bg);padding:2px 7px;border-radius:999px;white-space:nowrap}
+.t-c.done{color:var(--muted);background:var(--surface-2)}
+.t-d{font-size:12px;color:var(--muted)}
+
+.journal-empty{font-size:13px;color:var(--muted)}
+.finding{border:1px solid var(--line);border-left:4px solid var(--lamp);border-radius:6px;padding:10px 12px;margin-top:8px}
+.finding:first-of-type{margin-top:0}
+.f-t{font-weight:600;font-size:14px}
+.f-d{font-size:13px;color:var(--muted);margin:4px 0 8px}
+.verdicts{display:flex;flex-direction:column;gap:4px}
+.vb{text-align:left;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.vb:hover{border-color:var(--accent)}
+.vb[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.mentor{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center}
+.mentor p{font-size:13px;color:var(--muted)}
+
+/* Результат перевірки */
+.result{border-left:4px solid var(--accent)}
+.result-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+.result p+p,.result p+table,.result table+p{margin-top:10px}
+.mini{border-collapse:collapse;font-size:13px;width:100%}
+.mini th,.mini td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:left}
+.mini th{color:var(--muted);font-weight:500}
+.row-btns{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px}
+.chip{font-family:var(--mono);font-size:13px;padding:6px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{font-family:var(--sans);color:var(--muted)}
+.chars{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.ch{border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-width:64px;text-align:center;background:var(--surface-2)}
+.ch b{display:block;font-family:var(--mono);font-size:22px}
+.ch span{display:block;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.ch em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.ch.bad{border-color:var(--flag);background:var(--flag-bg)}
+.ch.bad span,.ch.bad em{color:var(--flag)}
+.gran{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;margin:8px 0 12px}
+.gran select{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0;width:100%}
+.good{color:var(--ok)} .bad-t{color:var(--flag)}
+.err{font-size:13px;color:var(--flag);margin-top:8px}
+
+/* Таблиці */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:-1px;position:relative;z-index:1}
+.tab{padding:8px 14px;border:1px solid var(--line);border-bottom-color:transparent;border-radius:8px 8px 0 0;background:var(--surface-2);cursor:pointer;font-size:13px;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);font-weight:500;border-bottom-color:var(--surface)}
+.tab .mono{font-size:12px}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:0 10px 10px 10px;overflow:hidden}
+.file{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.file b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+.scroll{overflow:auto;max-height:520px}
+table.grid{border-collapse:collapse;width:100%;font-size:13px}
+.grid th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-weight:500;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.grid td{padding:7px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.grid td.k{font-family:var(--mono)}
+.grid tr.click{cursor:pointer}
+.grid tr.click:hover td,.grid tr.click:focus-visible td{background:var(--accent-soft)}
+.grid tr.click:focus-visible{outline:none}
+.grid tr.hl td{background:var(--lamp-bg)}
+.grid tr.repeat td.rep{color:var(--muted)}
+.grid tfoot td{font-weight:600;background:var(--surface-2);border-bottom:0;position:sticky;bottom:0}
+.empty{color:var(--muted)}
+
+/* Модальні вікна */
+.overlay{position:fixed;inset:0;background:var(--overlay);display:grid;place-items:center;padding:20px;z-index:20}
+.dialog{background:var(--surface);border-radius:12px;max-width:560px;width:100%;max-height:calc(100% - 40px);overflow:auto;padding:22px;border:1px solid var(--line)}
+.dialog h2{font-size:20px;margin-bottom:8px}
+.dialog p{margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:8px;margin:12px 0 16px}
+.opt{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opt input{margin-top:4px;accent-color:var(--accent)}
+.opt.dis{opacity:.5;cursor:not-allowed}
+.d-acts{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.paper{background:var(--paper);color:var(--paper-ink);border:1px solid var(--paper-line);border-radius:4px;padding:22px;font-size:14px}
+.paper-h{font-weight:600;font-size:16px;text-align:center;margin-bottom:16px}
+.paper dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}
+.paper dt{color:var(--muted)}
+.paper dd{margin:0}
+.paper-f{margin-top:16px;padding-top:10px;border-top:1px dashed var(--paper-line);font-size:12px;color:var(--muted)}
+
+/* Брифінг */
+.brief{max-width:760px;margin:0 auto;padding:32px 20px 60px}
+.brief h1{font-size:32px;letter-spacing:-.02em;margin-bottom:8px}
+.brief .lead{color:var(--muted);margin-bottom:20px}
+.dash-now{display:flex;gap:24px;flex-wrap:wrap;background:var(--surface-2);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13px}
+.dash-now b{display:block;font-size:18px;font-variant-numeric:tabular-nums}
+.slot{border:0;padding:0;margin:0 0 18px}
+.slot legend{font-weight:600;margin-bottom:8px;padding:0}
+.card-opt{display:block;width:100%;text-align:left;padding:12px 14px;margin-bottom:6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;line-height:1.45}
+.card-opt:hover{border-color:var(--accent)}
+.card-opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+
+/* Фінал */
+.end{max-width:820px;margin:0 auto;padding:40px 20px 60px}
+.stamp{display:inline-block;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.stamp.win{background:var(--ok-bg);color:var(--ok)}
+.stamp.lose{background:var(--flag-bg);color:var(--flag)}
+.end h1{font-size:clamp(34px,6vw,56px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.end .story{font-size:17px;max-width:62ch;margin-bottom:28px}
+.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+@media (max-width:560px){.scores{grid-template-columns:1fr}}
+.score{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.score b{display:block;font-size:28px;font-variant-numeric:tabular-nums}
+.score span{font-size:13px;color:var(--muted)}
+.end h2{font-size:20px;margin:28px 0 12px}
+.rev{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.rev.ok{border-left:4px solid var(--ok)}
+.rev.no{border-left:4px solid var(--flag)}
+.rev-t{font-weight:600}
+.rev-m{font-size:13px;margin:4px 0 6px}
+.rev-w{font-size:14px;color:var(--muted)}
+.lesson{font-size:12px;color:var(--accent);margin-top:6px}
+.foot{max-width:1440px;margin:0 auto;padding:0 20px 28px;font-size:12px;color:var(--muted)}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ===================== ДАНІ (синтетичні) ===================== */
+const START = 120;   // 02:00
+const BUDGET = 360;  // 6 годин до 08:00
+const C = n => "C-" + n;          // латинська C (U+0043)
+const CYR = "\u0421-1147";        // кирилична С (U+0421) — пастка
+
+const CONTRACTS = [
+  {key:C(1141), sup:"ТОВ «Альфа-Метал»",    date:"02.06.2026", amt:12400000},
+  {key:C(1142), sup:"ПП «Бета-Тех»",         date:"04.06.2026", amt:8600000},
+  {key:C(1143), sup:"ТОВ «Гамма Композит»",  date:"09.06.2026", amt:5200000},
+  {key:C(1144), sup:"ТОВ «Дельта-Пак»",      date:"11.06.2026", amt:3900000},
+  {key:C(1145), sup:"АТ «Епсилон Оптика»",   date:"16.06.2026", amt:9750000},
+  {key:C(1146), sup:"ТОВ «Зета Логістик»",   date:"18.06.2026", amt:2300000},
+  {key:C(1147), sup:"ПП «Ета Електрон»",     date:"23.06.2026", amt:6850000},
+];
+const RAW = [
+  ["П-0301","03.07.2026",C(1141),3100000,"ПД-7710"],
+  ["П-0302","05.07.2026",C(1142),2580000,"ПД-7718"],
+  ["П-0303","08.07.2026",C(1145),2925000,"ПД-7725"],
+  ["П-0304","10.07.2026",C(1143),1560000,"ПД-7731"],
+  ["П-0305","15.07.2026",C(1144),1950000,"ПД-7738"],
+  ["П-0306","17.07.2026",C(1141),3100000,"ПД-7742"],
+  ["П-0307","22.07.2026",C(1146),1150000,"ПД-7751"],
+  ["П-0308","24.07.2026",C(1147),2055000,"ПД-7758"],
+  ["П-0309","31.07.2026",C(1145),2437500,"ПД-7766"],
+  ["П-0310","06.08.2026",C(1142),3440000,"ПД-7799"],
+  ["П-0311","12.08.2026",C(1143),2080000,"ПД-7808"],
+  ["П-0312","14.08.2026",C(1141),2480000,"ПД-7815"],
+  ["П-0313","19.08.2026",CYR,    2740000,"ПД-7829"],
+  ["П-0314","21.08.2026",C(1145),1950000,"ПД-7836"],
+  ["П-0315","25.08.2026",C(1144),1170000,"ПД-7851"],
+  ["П-0316","29.08.2026",C(1149),1450000,"ПД-7862"],
+  ["П-0317","03.09.2026",C(1146), 690000,"ПД-7880"],
+  ["П-0318","09.09.2026",C(1142),1720000,"ПД-7897"],
+  ["П-0319","11.09.2026",C(1141),1240000,"ПД-7903"],
+  ["П-0320","16.09.2026",C(1143),1040000,"ПД-7920"],
+  ["П-0321","18.09.2026",C(1145), 975000,"ПД-7931"],
+  ["П-0322","23.09.2026",CYR,    1370000,"ПД-7948"],
+];
+const norm = k => k.replace(/\u0421/g, "C");
+const trancheCount = {};
+const PAYMENTS = RAW.map(([id,date,key,amt,doc]) => {
+  const c = CONTRACTS.find(x => x.key === norm(key));
+  const nk = norm(key);
+  trancheCount[nk] = (trancheCount[nk] || 0) + 1;
+  const purpose = c
+    ? `Оплата ${trancheCount[nk]}-го траншу згідно з договором ${key} від ${c.date}`
+    : `Передоплата згідно з договором ${key} від 12.08.2026`;
+  return {id, date, key, amt, doc, sup: c ? c.sup : "ТОВ «Тета Трейд»", purpose};
+});
+const MERGED = (() => {
+  const rows = [];
+  CONTRACTS.forEach(c => {
+    const m = PAYMENTS.filter(p => p.key === c.key);
+    if (!m.length) rows.push({c, p:null, first:true});
+    else m.forEach((p,i) => rows.push({c, p, first:i === 0}));
+  });
+  return rows;
+})();
+const sum = (arr, f) => arr.reduce((s,x) => s + f(x), 0);
+const T = {
+  commitTrue: sum(CONTRACTS, c => c.amt),
+  commitMerged: sum(MERGED, r => r.c.amt),
+  paidMerged: sum(MERGED, r => r.p ? r.p.amt : 0),
+  paidNorm: sum(PAYMENTS.filter(p => CONTRACTS.some(c => c.key === norm(p.key))), p => p.amt),
+  paidFirst: sum(MERGED.filter(r => r.first && r.p), r => r.p.amt),
+  paidAll: sum(PAYMENTS, p => p.amt),
+};
+const LENS_KEYS = [...new Set(PAYMENTS.map(p => p.key))].sort();
+
+const FINDINGS = {
+  F1:{title:"Сума контракту повторюється в кожному рядку оплати",
+      detail:"Після Merge 7 контрактів перетворилися на 19 рядків, і колонка «Сума контракту» підсумовується стільки разів, скільки в контракту траншів.",
+      correct:"defect",
+      why:"Це помилка гранулярності, а не реальні зобов’язання. Зобов’язання рахуються на рівні контракту, оплати на рівні платежу, а таблиці зв’язуються один-до-багатьох.",
+      lesson:"Заняття 6 і 8: розмноження рядків після Merge, гранулярність і зіркова модель"},
+  F2:{title:"Оплати П-0313 і П-0322 не знайшли свій контракт",
+      detail:"4 110 000 ₴ за ключем, який виглядає як C-1147, хоча такий контракт у реєстрі є.",
+      correct:"defect",
+      why:"У ключі кирилична «С» замість латинської «C». Для машини це різні ключі. Ключ нормалізують до Merge, а не після.",
+      lesson:"Заняття 5 і 6: нечіткі ключі й нормалізація"},
+  F3:{title:"Оплата 1 450 000 ₴ за договором C-1149",
+      detail:"П-0316 на користь ТОВ «Тета Трейд». Ключ записаний коректно, але договору C-1149 у реєстрі немає.",
+      correct:"exception",
+      why:"Оплата без контракту — класичний червоний прапорець із реєстру винятків. Це не дефект даних, а питання до бухгалтерії, яке має потрапити до керівника.",
+      lesson:"Заняття 13: реєстр винятків"},
+  F4:{title:"Два однакові платежі 3 100 000 ₴ за C-1141",
+      detail:"П-0301 і П-0306: однакові ключ контракту й сума.",
+      correct:"ok",
+      why:"Дати (03.07 і 17.07) і платіжні доручення різні — це два транші одного контракту. Дубль перевіряють за ключем, датою, сумою й документом-підставою разом.",
+      lesson:"Заняття 3: чому «дубль» — небезпечний термін"},
+};
+const F_ORDER = ["F1","F2","F3","F4"];
+const VERDICTS = {defect:"Дефект даних: виправити", exception:"Реальний виняток: у звіт керівнику", ok:"Не проблема: залишити"};
+
+const TOOLS = [
+  {id:"rows", name:"Порахувати рядки й ключі", desc:"Рядки й унікальні ключі в кожній таблиці", cost:30},
+  {id:"sum",  name:"Контрольна сума", desc:"Сума контрактів до і після Merge", cost:30},
+  {id:"gran", name:"Підписати гранулярність", desc:"Що означає один рядок кожної таблиці", cost:30, open:true},
+  {id:"anti", name:"Anti-join", desc:"Записи, що не знайшли пари", cost:30, open:true},
+  {id:"dup",  name:"Пошук дублів", desc:"Однакові ключ і сума в оплатах", cost:30},
+  {id:"lens", name:"Лупа символів", desc:"Посимвольний розбір ключа", cost:30, open:true},
+];
+
+const FIXES = [
+  {id:"dedupe", t:"Видалити дублікати рядків у зведенні за ключем контракту"},
+  {id:"model",  t:"Розвести таблиці: зобов’язання рахувати в реєстрі контрактів, оплати в реєстрі оплат, зв’язок один-до-багатьох за ключем"},
+  {id:"div3",   t:"Поділити суму зобов’язань у зведенні на 3"},
+  {id:"manual", t:"Додати в звіт ручне коригування −100 250 000 ₴"},
+];
+
+const MEMO = [
+  {slot:"Факт", cards:[
+    {t:"Зобов’язання за 7 контрактами Q3 становлять 49,0 млн ₴, оплачено 41,75 млн ₴.", ok:true},
+    {t:"Зобов’язання за Q3 зросли до 149,25 млн ₴.", ok:false, why:"Це цифра з роздутого зведення, а не реальні зобов’язання."}]},
+  {slot:"Причина", cards:[
+    {t:"Звіт підсумовував суму контракту в кожному рядку оплати: один контракт множився на кількість траншів.", ok:true},
+    {t:"Постачальники, ймовірно, виставили зайві рахунки.", ok:false, why:"Це припущення, подане як факт. Дані його не підтверджують."}]},
+  {slot:"Ризик", cards:[
+    {t:"Оплата 1,45 млн ₴ за договором C-1149 не має підстави в реєстрі контрактів.", ok:true},
+    {t:"Ризиків немає: цифри виправлено.", ok:false, why:"Виправлення сум не прибирає реальний виняток C-1149."}]},
+  {slot:"Пропозиція", cards:[
+    {t:"Сьогодні звірити платіж C-1149 з бухгалтерією, а надалі рахувати зобов’язання на рівні контракту.", ok:true},
+    {t:"Заблокувати всі оплати постачальникам до повної перевірки.", ok:false, why:"Непропорційна реакція на один виняток: класична хибна тривога."}]},
+  {slot:"Обмеження даних", cards:[
+    {t:"Звірено лише реєстри контрактів і оплат за Q3; акти приймання не перевірялися.", ok:true},
+    {t:"Дані повністю перевірені, обмежень немає.", ok:false, why:"Записка без обмежень означає, що аналітик не знає меж своїх даних."}]},
+];
+
+/* ===================== СТАН ===================== */
+const fresh = () => ({
+  screen:"intro", used:0, tab:"merged", result:null, found:{}, verdict:{}, ran:{},
+  antiRun:{}, antiShow:null, lens:{}, lensSel:null, gran:null, granErr:false,
+  fix:null, norm:false, fixErr:null, hints:0, memo:{}, doc:null, modal:null, hl:new Set(),
+  memoOrder: MEMO.map(() => Math.random() < .5 ? [0,1] : [1,0]),
+});
+let S = fresh();
+
+/* ===================== ДОПОМІЖНЕ ===================== */
+const nf = new Intl.NumberFormat("uk-UA");
+const uah = n => nf.format(n) + " ₴";
+const mln = n => (n/1e6).toLocaleString("uk-UA",{minimumFractionDigits:2, maximumFractionDigits:2}) + " млн ₴";
+const pad = n => String(n).padStart(2,"0");
+const clock = m => { const t = START + m; return pad(Math.floor(t/60)) + ":" + pad(t % 60); };
+const left = m => { const h = Math.floor(m/60), mm = m % 60; return ((h ? h + " год " : "") + (mm ? mm + " хв" : "")).trim() || "0 хв"; };
+const canSpend = m => S.used + m <= BUDGET;
+const spend = m => { S.used = Math.min(BUDGET, S.used + m); };
+const find = f => { S.found[f] = true; };
+
+function kpi(){
+  if (!S.fix) return {commit:T.commitMerged, paid:T.paidMerged, note:null};
+  switch (S.fix){
+    case "dedupe": return {commit:T.commitTrue, paid:T.paidFirst, note:"Дублікати видалено: у зведенні 7 рядків."};
+    case "model":  return {commit:T.commitTrue, paid:S.norm ? T.paidNorm : T.paidMerged,
+                     note: S.norm ? "Модель розведено, ключі нормалізовано. Поза моделлю 1 оплата: 1 450 000 ₴."
+                                  : "Модель розведено. Поза моделлю 3 оплати: 5 560 000 ₴."};
+    case "div3":   return {commit:T.commitMerged/3, paid:T.paidMerged, note:"Суму зобов’язань поділено на 3."};
+    case "manual": return {commit:T.commitMerged - 100250000, paid:T.paidMerged, note:"У звіт додано ручне коригування −100 250 000 ₴."};
+  }
+}
+
+function nextHint(){
+  if (!S.found.F1) return "Почни з простого: скільки рядків і скільки різних ключів у кожній таблиці? Якщо після Merge рядків більше, ніж контрактів, шукай, що саме повторюється.";
+  if (!S.antiRun.pay) return "Роздуту суму ти знайшов. Але чи всі оплати взагалі знайшли свій контракт? Перевір зіставлення в зворотний бік.";
+  if (!S.lens[CYR]) return "Ключ C-1147 є і в реєстрі контрактів, і в оплатах, але частина оплат не зіставилась. Подивись на ці ключі під лупою.";
+  if (!S.found.F4) return "Перш ніж щось видаляти як «дубль», перевір, чи справді рядки однакові: дата, документ-підстава.";
+  return "Здається, усе потрібне вже в журналі. Не плутай дефект даних із реальним винятком: перше виправляють, друге несуть керівнику.";
+}
+
+/* ===================== РЕНДЕР ===================== */
+function header(){
+  const p = S.used / BUDGET * 100;
+  const ticks = [2,3,4,5,6,7,8].map(h => `<span>${pad(h)}:00</span>`).join("");
+  return `<header class="bar"><div class="bar-in">
+    <div class="case"><div class="case-k">Брифінг о 08:00</div><div class="case-t">Справа «Потрійний контракт»</div></div>
+    <div class="time">
+      <div class="clock" aria-label="Поточний час">${clock(S.used)}</div>
+      <div class="tl"><div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="${BUDGET}" aria-valuenow="${S.used}" aria-label="Минуло часу"><div class="fill" style="width:${p}%"></div></div><div class="ticks">${ticks}</div></div>
+      <div class="left">${S.screen === "work" ? "До брифінгу " + left(BUDGET - S.used) : ""}</div>
+    </div>
+  </div></header>`;
+}
+
+function intro(){
+  return `<main class="intro">
+    <h1>Справа «Потрійний контракт»</h1>
+    <p class="lead">Нічна зміна аналітика. Одна цифра, шість годин і рада директорів о 08:00.</p>
+    <div class="chat">
+      <div class="msg"><div class="ava">ОП</div><div class="bubble">
+        <div class="who"><b>Ольга Петрівна</b>, фінансова директорка, 01:52</div>
+        Подивилась дашборд перед радою. Зобов’язання за контрактами Q3 — 149,25 млн? У бюджеті було близько 50. О 08:00 я маю пояснити цю цифру. Розберися, що з нею, і скинь мені коротку записку.
+      </div></div>
+      <div class="msg"><div class="ava b">ІГ</div><div class="bubble">
+        <div class="who"><b>Ігор</b>, старший аналітик, 01:58</div>
+        Зведення робив стажер, файл називається «Зведення_Q3_фінал_ТОЧНО_v3.xlsx». Не вір йому на слово. Кожна перевірка забирає час, тож думай, що перевіряти. Застрягнеш — пиши, але на мене теж піде година.
+      </div></div>
+    </div>
+    <div class="rules">
+      <p>Перевіряй дані інструментами праворуч. Усе підозріле потрапляє в журнал відхилень, і для кожного запису ти вирішуєш: це дефект даних, реальний виняток чи взагалі не проблема.</p>
+      <p>Коли зрозумієш причину, виправ модель і збери записку для директорки. Рядки оплат можна відкривати до первинного документа: це безкоштовно.</p>
+    </div>
+    <button class="btn primary inline" data-act="start">Відкрити зведення</button>
+    <p class="synthetic">Усі дані синтетичні: компанії, договори й суми вигадані.</p>
+  </main>`;
+}
+
+function kpiCard(k){
+  return `<div class="panel">
+    <h2>Дашборд для ради директорів</h2>
+    <p class="sub">Q3 2026, ТОВ «Ковальня-17»</p>
+    <div class="metric ${k.commit > 60e6 ? "is-flag" : ""}">
+      <div class="m-l">Зобов’язання за контрактами</div>
+      <div class="m-v">${mln(k.commit)}</div>
+      <button class="link" data-act="drill">Розкрити до рядків</button>
+    </div>
+    <div class="metric"><div class="m-l">Оплачено</div><div class="m-v">${mln(k.paid)}</div></div>
+    <div class="metric"><div class="m-l">Залишок до оплати</div><div class="m-v">${mln(k.commit - k.paid)}</div></div>
+    <div class="budget">Бюджет Q3 за планом: близько 50 млн ₴</div>
+    ${k.note ? `<p class="note">${k.note}</p>` : ""}
+  </div>`;
+}
+
+function actions(){
+  const can = !!S.found.F1;
+  return `<div class="panel act">
+    <button class="btn primary" data-act="openFix" ${can ? "" : "disabled"}>${S.fix ? "Виправити модель ще раз" : "Виправити модель"}</button>
+    <p class="hint-s">${can ? "Займе 1 годину." : "Спершу з’ясуй, звідки взялася цифра."}</p>
+    <button class="btn" data-act="brief">Йти на брифінг</button>
+  </div>`;
+}
+
+function toolsCard(){
+  return `<div class="panel"><h2>Перевірки</h2><ul class="tools">${TOOLS.map(t => {
+    const done = S.ran[t.id];
+    const ok = t.open || done || canSpend(t.cost);
+    const label = done ? "зроблено" : t.open ? t.cost + " хв за запуск" : t.cost + " хв";
+    return `<li><button class="tool" data-act="tool" data-v="${t.id}" ${ok ? "" : "disabled"}>
+      <span class="t-n">${t.name}</span><span class="t-c ${done ? "done" : ""}">${label}</span><span class="t-d">${t.desc}</span>
+    </button></li>`;
+  }).join("")}</ul></div>`;
+}
+
+function journalCard(){
+  const list = F_ORDER.filter(f => S.found[f]);
+  return `<div class="panel"><h2>Журнал відхилень <span class="mono" style="color:var(--muted);font-weight:400">${list.length}</span></h2>
+    ${list.length ? list.map(f => `<div class="finding">
+      <div class="f-t">${FINDINGS[f].title}</div>
+      <div class="f-d">${FINDINGS[f].detail}</div>
+      <div class="verdicts" role="group" aria-label="Вердикт">${Object.entries(VERDICTS).map(([v,t]) =>
+        `<button class="vb" data-act="verdict" data-f="${f}" data-v="${v}" aria-pressed="${S.verdict[f] === v}">${t}</button>`).join("")}</div>
+    </div>`).join("") : `<p class="journal-empty">Поки порожньо. Знахідки з’являться тут після перевірок.</p>`}
+  </div>`;
+}
+
+function mentorCard(){
+  return `<div class="panel mentor"><div class="ava b">ІГ</div><div>
+    <button class="btn" data-act="hint" ${canSpend(60) ? "" : "disabled"}>Написати Ігорю</button>
+    <p style="margin-top:6px">Підказка забере 1 годину.</p>
+  </div></div>`;
+}
+
+function resultCard(){
+  const r = S.result; let title = "", body = "";
+  switch (r.tool){
+    case "drill":
+      title = "Звідки ця цифра";
+      body = `<p>149,25 млн ₴ — це сума колонки «Сума контракту» у файлі <span class="mono">Зведення_Q3_фінал_ТОЧНО_v3.xlsx</span>: 19 рядків, зібраних через Merge реєстру контрактів і реєстру оплат.</p>
+        <p>Порівняй цей файл із вихідними реєстрами на сусідніх вкладках.</p>`;
+      break;
+    case "rows":
+      title = "Рядки й ключі";
+      body = `<table class="mini"><thead><tr><th>Таблиця</th><th class="num">Рядків</th><th class="num">Унікальних ключів</th></tr></thead><tbody>
+        <tr><td>Реєстр контрактів</td><td class="num">7</td><td class="num">7</td></tr>
+        <tr><td>Реєстр оплат</td><td class="num">22</td><td class="num">${LENS_KEYS.length}</td></tr>
+        <tr><td>Зведення_Q3_фінал_ТОЧНО_v3</td><td class="num">${MERGED.length}</td><td class="num">7</td></tr></tbody></table>
+        <p>7 контрактів після Merge перетворилися на ${MERGED.length} рядків. А в оплатах ${LENS_KEYS.length} різних ключів, хоча контрактів лише 7.</p>`;
+      break;
+    case "sum":
+      title = "Контрольна сума";
+      body = `<table class="mini"><tbody>
+        <tr><td>«Сума контракту» в реєстрі контрактів</td><td class="num">${uah(T.commitTrue)}</td></tr>
+        <tr><td>Та сама колонка в зведенні</td><td class="num">${uah(T.commitMerged)}</td></tr>
+        <tr><td><b>Різниця</b></td><td class="num"><b>${uah(T.commitMerged - T.commitTrue)}</b></td></tr></tbody></table>
+        <p>Різниця не дорівнює нулю: під час Merge щось змінило суму.</p>`;
+      break;
+    case "gran": {
+      const opts = ["Один контракт","Один платіж (транш)","Один платіж разом із даними контракту"];
+      const right = ["0","1","2"];
+      const names = ["Реєстр контрактів","Реєстр оплат","Зведення"];
+      title = "Гранулярність: що означає один рядок";
+      if (S.gran){
+        body = `<table class="mini"><tbody>${names.map((n,i) => `<tr><td>${n}</td><td>${opts[+S.gran[i]]}</td><td class="${S.gran[i] === right[i] ? "good" : "bad-t"}">${S.gran[i] === right[i] ? "так" : "ні: " + opts[+right[i]].toLowerCase()}</td></tr>`).join("")}</tbody></table>
+          <p>Рядок зведення — це платіж. А «Сума контракту» — властивість контракту, тож на рівні платежу вона повторюється й підсумовувати її не можна.</p>`;
+      } else {
+        body = `<div class="gran">${names.map((n,i) => `<label for="g${i}">${n}</label><select id="g${i}"><option value="">Обери</option>${opts.map((o,j) => `<option value="${j}">${o}</option>`).join("")}</select>`).join("")}</div>
+          <button class="btn primary inline" data-act="granCheck" ${canSpend(30) ? "" : "disabled"}>Перевірити, 30 хв</button>
+          ${S.granErr ? `<p class="err">Підпиши всі три таблиці.</p>` : ""}`;
+      }
+      break; }
+    case "anti":
+      title = "Anti-join";
+      body = `<p>Який бік перевірити?</p><div class="row-btns">
+        <button class="chip" data-act="anti" data-v="pay" aria-pressed="${S.antiShow === "pay"}" ${S.antiRun.pay || canSpend(30) ? "" : "disabled"}>Оплати без контракту <small>${S.antiRun.pay ? "" : "30 хв"}</small></button>
+        <button class="chip" data-act="anti" data-v="con" aria-pressed="${S.antiShow === "con"}" ${S.antiRun.con || canSpend(30) ? "" : "disabled"}>Контракти без оплат <small>${S.antiRun.con ? "" : "30 хв"}</small></button></div>`;
+      if (S.antiShow === "pay"){
+        const rows = PAYMENTS.filter(p => !CONTRACTS.some(c => c.key === p.key));
+        body += `<table class="mini"><thead><tr><th>Платіж</th><th>Ключ</th><th>Отримувач</th><th class="num">Сума</th></tr></thead><tbody>
+          ${rows.map(p => `<tr><td class="mono">${p.id}</td><td class="mono">${p.key}</td><td>${p.sup}</td><td class="num">${uah(p.amt)}</td></tr>`).join("")}</tbody></table>
+          <p>${rows.length} оплати не знайшли пари в реєстрі контрактів. Рядки підсвічено в реєстрі оплат.</p>`;
+      } else if (S.antiShow === "con"){
+        body += `<p>Таких немає: кожен контракт має хоча б одну оплату з точно таким самим ключем.</p>`;
+      }
+      break;
+    case "dup":
+      title = "Пошук дублів";
+      body = `<p>Знайдено 1 групу з однаковими ключем і сумою.</p>
+        <table class="mini"><thead><tr><th>Платіж</th><th>Ключ</th><th>Дата</th><th>Доручення</th><th class="num">Сума</th></tr></thead><tbody>
+        ${PAYMENTS.filter(p => p.id === "П-0301" || p.id === "П-0306").map(p => `<tr><td class="mono">${p.id}</td><td class="mono">${p.key}</td><td>${p.date}</td><td class="mono">${p.doc}</td><td class="num">${uah(p.amt)}</td></tr>`).join("")}</tbody></table>`;
+      break;
+    case "lens": {
+      title = "Лупа символів";
+      body = `<p>Обери ключ із реєстру оплат. Кожен новий розбір забирає 30 хв.</p><div class="row-btns">
+        ${LENS_KEYS.map((k,i) => `<button class="chip" data-act="lens" data-i="${i}" aria-pressed="${S.lensSel === k}" ${S.lens[k] || canSpend(30) ? "" : "disabled"}>${k} <small>${PAYMENTS.filter(p => p.key === k).length} опл.</small></button>`).join("")}</div>`;
+      if (S.lensSel){
+        const k = S.lensSel;
+        const chars = [...k].map(ch => {
+          const cp = ch.codePointAt(0);
+          const name = ch === "C" ? "латинська C" : ch === "\u0421" ? "кирилична Ес" : ch === "-" ? "дефіс" : "цифра";
+          return `<div class="ch ${cp === 0x421 ? "bad" : ""}"><b>${ch}</b><span>U+${cp.toString(16).toUpperCase().padStart(4,"0")}</span><em>${name}</em></div>`;
+        }).join("");
+        body += `<div class="chars">${chars}</div>` + (k === CYR
+          ? `<p>Перша літера кирилична «Ес» (U+0421), а не латинська C (U+0043). На екрані їх не відрізнити, але для Merge це два різні ключі.</p>`
+          : k === C(1149)
+            ? `<p>Усі символи коректні. Ключ записаний правильно, але контракту C-1149 у реєстрі немає.</p>`
+            : `<p>Усі символи коректні: латинська C, дефіс і цифри.</p>`);
+      }
+      break; }
+    case "hint":
+      title = "Ігор відповідає";
+      body = `<p>${r.text}</p>`;
+      break;
+    case "fixed": {
+      title = "Модель виправлено";
+      const k = kpi();
+      body = `<p>Зобов’язання тепер ${mln(k.commit)}, оплачено ${mln(k.paid)}.</p><p>${k.note}</p>`;
+      break; }
+  }
+  return `<div class="panel result" aria-live="polite"><div class="result-h"><h2>${title}</h2><button class="link" data-act="hide">Сховати</button></div>${body}</div>`;
+}
+
+function tables(){
+  const tabs = [["merged","Зведення_Q3_фінал_ТОЧНО_v3",MERGED.length],["contracts","Реєстр контрактів",CONTRACTS.length],["payments","Реєстр оплат",PAYMENTS.length]];
+  let file = "", head = "", body = "", foot = "";
+  if (S.tab === "merged"){
+    file = `<b>Зведення_Q3_фінал_ТОЧНО_v3.xlsx</b><span>Merge: контракти + оплати за ключем</span>`;
+    head = `<th>Ключ</th><th>Постачальник</th><th class="num">Сума контракту</th><th>Платіж</th><th>Дата оплати</th><th class="num">Сума оплати</th>`;
+    body = MERGED.map(r => `<tr class="${r.p ? "click" : ""} ${r.first ? "" : "repeat"} ${r.p && S.hl.has(r.p.id) ? "hl" : ""}" ${r.p ? `tabindex="0" data-act="doc" data-id="${r.p.id}"` : ""}>
+      <td class="k">${r.c.key}</td><td>${r.c.sup}</td><td class="num">${uah(r.c.amt)}</td>
+      <td class="k">${r.p ? r.p.id : "—"}</td><td>${r.p ? r.p.date : "—"}</td><td class="num">${r.p ? uah(r.p.amt) : "—"}</td></tr>`).join("");
+    foot = `<tr><td colspan="2">Разом</td><td class="num">${uah(T.commitMerged)}</td><td></td><td></td><td class="num">${uah(T.paidMerged)}</td></tr>`;
+  } else if (S.tab === "contracts"){
+    file = `<b>Реєстр_контрактів_Q3.xlsx</b><span>Один рядок на договір</span>`;
+    head = `<th>Ключ</th><th>Постачальник</th><th>Дата підписання</th><th class="num">Сума контракту</th>`;
+    body = CONTRACTS.map(c => `<tr><td class="k">${c.key}</td><td>${c.sup}</td><td>${c.date}</td><td class="num">${uah(c.amt)}</td></tr>`).join("");
+    foot = `<tr><td colspan="3">Разом</td><td class="num">${uah(T.commitTrue)}</td></tr>`;
+  } else {
+    file = `<b>Реєстр_оплат_Q3.xlsx</b><span>Вивантаження з банку, рядок відкривається до доручення</span>`;
+    head = `<th>Платіж</th><th>Дата</th><th>Ключ контракту</th><th>Отримувач</th><th class="num">Сума</th><th>Доручення</th>`;
+    body = PAYMENTS.map(p => `<tr class="click ${S.hl.has(p.id) ? "hl" : ""}" tabindex="0" data-act="doc" data-id="${p.id}">
+      <td class="k">${p.id}</td><td>${p.date}</td><td class="k">${p.key}</td><td>${p.sup}</td><td class="num">${uah(p.amt)}</td><td class="k">${p.doc}</td></tr>`).join("");
+    foot = `<tr><td colspan="4">Разом</td><td class="num">${uah(T.paidAll)}</td><td></td></tr>`;
+  }
+  return `<div>
+    <div class="tabs" role="tablist">${tabs.map(([id,n,c]) => `<button class="tab" role="tab" aria-selected="${S.tab === id}" data-act="tab" data-v="${id}">${n} <span class="mono">${c}</span></button>`).join("")}</div>
+    <div class="sheet"><div class="file">${file}</div>
+      <div class="scroll"><table class="grid"><thead><tr>${head}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>
+    </div></div>`;
+}
+
+function work(){
+  return `<main class="work">
+    <section class="col-l">${kpiCard(kpi())}${actions()}</section>
+    <section class="col-c">${S.result ? resultCard() : ""}${tables()}</section>
+    <aside class="col-r">${toolsCard()}${journalCard()}${mentorCard()}</aside>
+  </main>
+  <p class="foot">Прототип однієї справи. Усі дані синтетичні.</p>`;
+}
+
+function modal(){
+  if (!S.modal) return "";
+  let inner = "";
+  if (S.modal === "doc"){
+    const p = PAYMENTS.find(x => x.id === S.doc);
+    inner = `<div class="paper">
+      <div class="paper-h">Платіжне доручення № ${p.doc.replace("ПД-","")}</div>
+      <dl><dt>Дата</dt><dd>${p.date}</dd><dt>Платник</dt><dd>ТОВ «Ковальня-17»</dd><dt>Отримувач</dt><dd>${p.sup}</dd>
+      <dt>Сума</dt><dd class="mono">${uah(p.amt)}</dd><dt>Призначення</dt><dd>${p.purpose}</dd></dl>
+      <div class="paper-f">У реєстрі оплат: ${p.id}. Документ синтетичний.</div></div>
+      <div class="d-acts" style="margin-top:16px"><button class="btn inline" data-act="close">Закрити</button></div>`;
+  } else if (S.modal === "fix"){
+    inner = `<h2>Виправити модель</h2><p>Як прибрати роздуту суму? Виправлення забере 1 годину.</p>
+      <div class="opts">${FIXES.map(f => `<label class="opt"><input type="radio" name="fix" value="${f.id}" ${S.fix === f.id ? "checked" : ""}><span>${f.t}</span></label>`).join("")}</div>
+      <label class="opt ${S.found.F2 ? "" : "dis"}"><input type="checkbox" id="norm" ${S.found.F2 ? "" : "disabled"} ${S.norm ? "checked" : ""}>
+        <span>Нормалізувати ключі контрактів до зіставлення${S.found.F2 ? "" : " (спершу з’ясуй, чому частина оплат не зіставилась)"}</span></label>
+      ${S.fixErr === "none" ? `<p class="err">Обери спосіб виправлення.</p>` : S.fixErr === "time" ? `<p class="err">Не вистачає часу до брифінгу.</p>` : ""}
+      <div class="d-acts" style="margin-top:16px"><button class="btn inline" data-act="close">Скасувати</button><button class="btn primary inline" data-act="applyFix">Застосувати</button></div>`;
+  } else if (S.modal === "timeout"){
+    inner = `<h2>08:00</h2><p>Час вийшов. Ольга Петрівна вже в переговорній, тож іди з тим, що маєш.</p>
+      <div class="d-acts"><button class="btn primary inline" data-act="brief">На брифінг</button></div>`;
+  }
+  return `<div class="overlay" ${S.modal === "timeout" ? "" : `data-act="overlay"`}><div class="dialog" role="dialog" aria-modal="true">${inner}</div></div>`;
+}
+
+function brief(){
+  const k = kpi();
+  const full = MEMO.every((_,i) => S.memo[i] !== undefined);
+  return `<main class="brief">
+    <h1>Записка для директорки</h1>
+    <p class="lead">Ольга Петрівна: «Я в переговорній. Одна сторінка: факт, причина, ризик, пропозиція, обмеження. По одному реченню.»</p>
+    <div class="dash-now"><div>Зобов’язання на твоєму дашборді<b>${mln(k.commit)}</b></div><div>Оплачено<b>${mln(k.paid)}</b></div><div>Знахідок у журналі<b>${F_ORDER.filter(f => S.found[f]).length}</b></div></div>
+    ${MEMO.map((m,i) => `<fieldset class="slot"><legend>${m.slot}</legend>${S.memoOrder[i].map(ci =>
+      `<button class="card-opt" data-act="memo" data-s="${i}" data-i="${ci}" aria-pressed="${S.memo[i] === ci}">${m.cards[ci].t}</button>`).join("")}</fieldset>`).join("")}
+    <button class="btn primary inline" data-act="submit" ${full ? "" : "disabled"}>Надіслати записку</button>
+  </main>`;
+}
+
+function evaluate(){
+  const fr = F_ORDER.map(f => ({f, found:!!S.found[f], v:S.verdict[f] || null, ok:!!S.found[f] && S.verdict[f] === FINDINGS[f].correct}));
+  const mr = MEMO.map((m,i) => ({slot:m.slot, card:m.cards[S.memo[i]]}));
+  let end;
+  if (!S.fix) end = "asis";
+  else if (S.fix !== "model") end = "dash";
+  else if (S.verdict.F3 !== "exception" || !mr[2].card.ok) end = "missed";
+  else if (["F1","F2","F4"].some(f => S.verdict[f] === "exception") || !mr[0].card.ok || !mr[1].card.ok || !mr[3].card.ok) end = "alarm";
+  else end = "win";
+  return {fr, mr, end};
+}
+
+const ENDINGS = {
+  win:   {t:"Рішення на правильних цифрах", s:"Ольга Петрівна пояснила раді різницю за дві хвилини: роздуте зведення, 49,0 млн реальних зобов’язань і один платіж, який треба перевірити сьогодні. Наступного кварталу модель оновиться сама, без ручних правок."},
+  asis:  {t:"Звіт пішов як є", s:"Рада директорів побачила 149,25 млн зобов’язань і заморозила нові закупівлі. Модель так ніхто й не виправив, тож наступного кварталу цифра знову буде роздута."},
+  missed:{t:"Платіж без підстави", s:"Цифри в звіті правильні, але 1,45 млн ₴ на користь ТОВ «Тета Трейд» без договору пройшли непоміченими. Їх знайде аудит, уже без вас."},
+  alarm: {t:"Хибна тривога", s:"Цифри виправлені, але записка звучить тривожніше, ніж показують дані. Рада витратила засідання на проблему, якої немає, а справжній виняток загубився серед зайвого шуму."},
+  dash:  {t:"Красивий дашборд", s:""},
+};
+const DASH_TEXT = {
+  dedupe:"Цифра зобов’язань зійшлася, але видалення «дублів» викинуло 15 платежів: оплачено показує 15,32 млн замість 41,75. Рада побачила борг постачальникам, якого немає.",
+  div3:"Поділ на 3 дав 49,75 млн. Майже правильно, і саме тому небезпечно: наступного кварталу траншів буде інша кількість, і формула мовчки збреше.",
+  manual:"Ручне коригування зробило цифру правильною рівно до наступного оновлення файла. Хто й навіщо віднімав 100 млн, за місяць не пам’ятатиме ніхто.",
+};
+const FIX_WHY = {
+  model:"Правильно: зобов’язання рахуються в реєстрі контрактів, оплати в реєстрі оплат, а таблиці зв’язані один-до-багатьох за ключем.",
+  dedupe:"Видалення «дублів» лікує симптом і знищує дані: разом із повторами сум зникли справжні платежі.",
+  div3:"Ділення на 3 підганяє відповідь під очікування. Кількість траншів у кожного контракту різна, тож це збіг, а не модель.",
+  manual:"Ручне коригування не пояснює причину й ламається на першому ж оновленні.",
+};
+
+function end(){
+  const e = evaluate();
+  const E = ENDINGS[e.end];
+  const story = e.end === "dash" ? DASH_TEXT[S.fix] : E.s;
+  const fOk = e.fr.filter(x => x.ok).length;
+  const mOk = e.mr.filter(x => x.card.ok).length;
+  return `<main class="end">
+    <span class="stamp ${e.end === "win" ? "win" : "lose"}">${e.end === "win" ? "Справу закрито" : "Справу закрито з наслідками"}</span>
+    <h1>${E.t}</h1>
+    <p class="story">${story}</p>
+    <div class="scores">
+      <div class="score"><b>${fOk} з 4</b><span>знахідок правильно оцінено</span></div>
+      <div class="score"><b>${mOk} з 5</b><span>речень записки без пасток</span></div>
+      <div class="score"><b>${left(S.used)}</b><span>використано з 6 годин</span></div>
+    </div>
+
+    <h2>Журнал відхилень</h2>
+    ${e.fr.map(x => { const F = FINDINGS[x.f]; return `<div class="rev ${x.ok ? "ok" : "no"}">
+      <div class="rev-t">${F.title}</div>
+      <div class="rev-m">${!x.found ? "Ти цього не знайшов." : x.v ? "Твій вердикт: " + VERDICTS[x.v].toLowerCase() + "." : "Вердикт не винесено."} Правильно: ${VERDICTS[F.correct].toLowerCase()}.</div>
+      <div class="rev-w">${F.why}</div><div class="lesson">${F.lesson}</div></div>`; }).join("")}
+
+    <h2>Виправлення моделі</h2>
+    <div class="rev ${S.fix === "model" ? "ok" : "no"}">
+      <div class="rev-t">${S.fix ? FIXES.find(f => f.id === S.fix).t : "Модель не виправлено"}</div>
+      <div class="rev-w">${S.fix ? FIX_WHY[S.fix] : "Без виправлення рада бачить роздуту цифру."}${S.fix === "model" && !S.norm ? " Але ключі не нормалізовано: 4 110 000 ₴ оплат за С-1147 лишилися поза моделлю." : ""}</div>
+      <div class="lesson">Заняття 8: модель даних, факти й довідники</div>
+    </div>
+
+    <h2>Записка</h2>
+    ${e.mr.map(x => `<div class="rev ${x.card.ok ? "ok" : "no"}"><div class="rev-t">${x.slot}</div><div class="rev-m">${x.card.t}</div>${x.card.ok ? "" : `<div class="rev-w">${x.card.why}</div>`}</div>`).join("")}
+    <div class="lesson" style="margin-bottom:24px">Заняття 14: структура записки факт, причина, ризик, пропозиція, обмеження</div>
+
+    <button class="btn primary inline" data-act="restart">Зіграти ще раз</button>
+  </main>`;
+}
+
+function render(){
+  const app = document.getElementById("app");
+  const scroller = app.querySelector(".scroll");
+  const keep = scroller ? scroller.scrollTop : 0;
+  const screens = {intro, work, brief, end};
+  app.innerHTML = header() + screens[S.screen]() + modal();
+  const s2 = app.querySelector(".scroll");
+  if (s2) s2.scrollTop = keep;
+  const d = app.querySelector(".dialog button, .dialog input");
+  if (d) d.focus();
+}
+
+/* ===================== ДІЇ ===================== */
+function act(a, d){
+  switch (a){
+    case "start": S.screen = "work"; window.scrollTo(0,0); break;
+    case "tab": S.tab = d.v; break;
+    case "drill": S.tab = "merged"; S.result = {tool:"drill"}; S.hl = new Set(); break;
+    case "hide": S.result = null; break;
+    case "tool": {
+      const t = TOOLS.find(x => x.id === d.v);
+      if (!t.open && !S.ran[t.id]){
+        if (!canSpend(t.cost)) return;
+        spend(t.cost); S.ran[t.id] = true;
+        if (t.id === "rows" || t.id === "sum") find("F1");
+        if (t.id === "dup") find("F4");
+      }
+      if (t.id === "dup"){ S.hl = new Set(["П-0301","П-0306"]); S.tab = "payments"; }
+      if (t.id === "rows" || t.id === "sum") S.hl = new Set();
+      S.result = {tool:t.id};
+      break; }
+    case "granCheck": {
+      const v = [0,1,2].map(i => document.getElementById("g" + i).value);
+      if (v.some(x => x === "")){ S.granErr = true; break; }
+      if (!canSpend(30)) return;
+      spend(30); S.gran = v; S.granErr = false; S.ran.gran = true;
+      if (v[2] === "2" || v[1] === "1") find("F1");
+      break; }
+    case "anti":
+      if (!S.antiRun[d.v]){
+        if (!canSpend(30)) return;
+        spend(30); S.antiRun[d.v] = true;
+        if (d.v === "pay"){ find("F2"); find("F3"); }
+        if (S.antiRun.pay && S.antiRun.con) S.ran.anti = true;
+      }
+      S.antiShow = d.v;
+      if (d.v === "pay"){ S.hl = new Set(["П-0313","П-0316","П-0322"]); S.tab = "payments"; }
+      break;
+    case "lens": {
+      const k = LENS_KEYS[+d.i];
+      if (!S.lens[k]){
+        if (!canSpend(30)) return;
+        spend(30); S.lens[k] = true;
+        if (k === CYR) find("F2");
+      }
+      S.lensSel = k;
+      S.hl = new Set(PAYMENTS.filter(p => p.key === k).map(p => p.id));
+      S.tab = "payments";
+      break; }
+    case "verdict": S.verdict[d.f] = d.v; break;
+    case "hint":
+      if (!canSpend(60)) return;
+      spend(60); S.hints++; S.result = {tool:"hint", text:nextHint()};
+      break;
+    case "doc": S.doc = d.id; S.modal = "doc"; break;
+    case "openFix": S.fixErr = null; S.modal = "fix"; break;
+    case "applyFix": {
+      const r = document.querySelector('input[name="fix"]:checked');
+      if (!r){ S.fixErr = "none"; break; }
+      if (!canSpend(60)){ S.fixErr = "time"; break; }
+      const n = document.getElementById("norm");
+      spend(60); S.fix = r.value; S.norm = !!(n && n.checked);
+      S.modal = null; S.result = {tool:"fixed"}; S.tab = "merged"; S.hl = new Set();
+      break; }
+    case "close": case "overlay": S.modal = null; S.doc = null; break;
+    case "brief": S.modal = null; S.screen = "brief"; window.scrollTo(0,0); break;
+    case "memo": S.memo[+d.s] = +d.i; break;
+    case "submit": S.screen = "end"; window.scrollTo(0,0); break;
+    case "restart": S = fresh(); window.scrollTo(0,0); break;
+  }
+  if (S.screen === "work" && S.used >= BUDGET && !S.modal) S.modal = "timeout";
+  render();
+}
+
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-act]");
+  if (!el || el.disabled) return;
+  if (el.dataset.act === "overlay" && e.target !== el) return;
+  act(el.dataset.act, el.dataset);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && S.modal && S.modal !== "timeout"){ act("close", {}); return; }
+  const el = e.target.closest && e.target.closest("tr[data-act]");
+  if (el && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); act(el.dataset.act, el.dataset); }
+});
+
+render();
+</script>
+</body>
+</html>
